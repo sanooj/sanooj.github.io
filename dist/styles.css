@@ -203,35 +203,15 @@ button {
   margin: 20px 0;
   background-color: var(--white);
   box-shadow: var(--box-shadow);
-  width: min(800px, 90%);
+  width: min(800px, 100%);
   border-radius: var(--border-radius);
   padding: 20px;
-  overflow: hidden;
 }
 
 .form {
   display: flex;
   flex-direction: column;
   row-gap: 20px;
-
-  .field {
-    display: flex;
-    flex-direction: column;
-    row-gap: 5px;
-
-    label {
-      font-weight: bold;
-    }
-
-    .field-input {
-      display: flex;
-      column-gap: 5px;
-
-      button {
-        font-size: 18px;
-      }
-    }
-  }
 }
 
 /** modal */
@@ -252,7 +232,7 @@ button {
   padding: 20px;
   border-radius: var(--border-radius);
   box-shadow: var(--box-shadow);
-  width: min(800px, 80%);
+  width: min(800px, 100%);
   position: relative;
 }
 
@@ -263,10 +243,4 @@ button {
   cursor: pointer;
   font-size: 20px;
   font-family: Arial, Helvetica, sans-serif;
-}
-
-footer.controls {
-  background: #f1f1f1;
-  margin: 2em -20px -20px;
-  padding: 1.5em 2em;
 }
