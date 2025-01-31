@@ -1,0 +1,327 @@
+/* Box model */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* HTML5 display-role reset for older browsers */
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+main,
+menu,
+nav,
+section {
+  display: block;
+}
+
+/* Links */
+a {
+  text-decoration: none;
+}
+
+/* Images */
+img {
+  border-style: none;
+}
+
+/* Lists */
+ul,
+ol,
+li {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+/* Tables */
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+/* Forms */
+input,
+textarea,
+select {
+  margin: 0;
+  padding: 0;
+  border: none;
+  outline: none;
+}
+/* Headings */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin: 0;
+  padding: 0;
+  font-weight: bold;
+  font-style: normal;
+  color: #333;
+  text-rendering: optimizeLegibility;
+}
+
+/* variables */
+:root {
+  --primary: #007bff;
+  --secondary: #6c757d;
+  --success: #28a745;
+  --info: #17a2b8;
+  --warning: #ffc107;
+  --danger: #dc3545;
+  --light: #f8f9fa;
+  --dark: #343a40;
+  --white: #fff;
+  --bg-color: #f3f0e7;
+  --green: #10b981;
+  --primary-text-color: #333;
+  --form-border-color: #c0c4c9;
+  --form-background-color: #f9fafb;
+  --border-radius: 0.75rem;
+  --form-border-radius: 0.25rem;
+  --box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+
+/* Misc */
+html,
+body {
+  font-family: sans-serif;
+  line-height: 1.5;
+}
+
+body {
+  font-size: 16px;
+  line-height: 1.5;
+  color: var(--primary-text-color);
+  background-color: var(--bg-color, #f3f0e7);
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  display: flex;
+  justify-content: center;
+}
+
+/* Styles */
+h1 {
+  font-size: 36px;
+  line-height: 40px;
+  margin-bottom: 10px;
+}
+
+h2 {
+  font-size: 28px;
+  line-height: 32px;
+  margin-bottom: 8px;
+}
+
+h3 {
+  font-size: 22px;
+  line-height: 26px;
+  margin-bottom: 6px;
+}
+
+h4 {
+  font-size: 18px;
+  line-height: 22px;
+  margin-bottom: 4px;
+}
+
+h5 {
+  font-size: 16px;
+  line-height: 20px;
+  margin-bottom: 2px;
+}
+
+h6 {
+  font-size: 14px;
+  line-height: 18px;
+  margin-bottom: 1px;
+}
+
+/* Utilities */
+select,
+input {
+  width: 100%;
+  height: 44px;
+  border: var(--form-border-color) 1px solid;
+  border-bottom-width: 2px;
+  border-radius: var(--form-border-radius);
+  padding: 16px;
+  max-width: 400px;
+  background-color: var(--form-background-color);
+}
+
+input[type="checkbox"],
+input[type="radio"] {
+  width: 16px;
+  height: 16px;
+  margin: 0 10px 0 0;
+  border: var(--form-border-color) 1px solid;
+  background-color: var(--form-background-color);
+  appearance: none;
+  padding: 0;
+  margin: 0;
+  &:checked {
+    background-color: var(--primary);
+    border-color: var(--primary);
+
+    box-shadow: inset 0 0 0 3px #fff;
+  }
+}
+
+input[type="radio"] {
+  border-radius: 100%;
+}
+
+select {
+  appearance: none;
+  padding: 8px 16px;
+}
+
+button {
+  padding: 0.5em 1em;
+  border-radius: 5px;
+  font-size: 0.875rem;
+  background-color: var(--green);
+  border: none;
+  color: var(--white);
+  cursor: pointer;
+}
+
+/** content */
+.form-container {
+  display: flex;
+  flex-direction: column;
+  margin: 20px 0;
+  background-color: var(--white);
+  box-shadow: var(--box-shadow);
+  width: min(800px, 90%);
+  border-radius: var(--border-radius);
+  padding: 20px;
+  overflow: hidden;
+}
+
+.field-container {
+  position: relative;
+
+  &.dragging {
+    opacity: 0.5;
+    background: #f5f5f5;
+    padding: 20px;
+    cursor: grab;
+  }
+  &::after {
+    content: "";
+    mask-size: contain;
+    mask-position: bottom;
+    mask-image: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20class%3D%22ag-icon%22%20fill%3D%22none%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%20stroke%3D%22black%22%20stroke-width%3D%221.5%22%20viewBox%3D%220%200%2024%2024%22%3E%3Cstyle%3E*%20%7B%20vector-effect%3A%20non-scaling-stroke%3B%20%7D%3C%2Fstyle%3E%3Ccircle%20cx%3D%225%22%20cy%3D%228%22%20r%3D%220.5%22%2F%3E%3Ccircle%20cx%3D%2212%22%20cy%3D%228%22%20r%3D%220.5%22%2F%3E%3Ccircle%20cx%3D%2219%22%20cy%3D%228%22%20r%3D%220.5%22%2F%3E%3Ccircle%20cx%3D%225%22%20cy%3D%2216%22%20r%3D%220.5%22%2F%3E%3Ccircle%20cx%3D%2212%22%20cy%3D%2216%22%20r%3D%220.5%22%2F%3E%3Ccircle%20cx%3D%2219%22%20cy%3D%2216%22%20r%3D%220.5%22%2F%3E%3Cg%20stroke%3D%22none%22%20fill%3D%22currentColor%22%3E%3Ccircle%20cx%3D%225%22%20cy%3D%228%22%20r%3D%221%22%2F%3E%3Ccircle%20cx%3D%2212%22%20cy%3D%228%22%20r%3D%221%22%2F%3E%3Ccircle%20cx%3D%2219%22%20cy%3D%228%22%20r%3D%221%22%2F%3E%3Ccircle%20cx%3D%225%22%20cy%3D%2216%22%20r%3D%221%22%2F%3E%3Ccircle%20cx%3D%2212%22%20cy%3D%2216%22%20r%3D%221%22%2F%3E%3Ccircle%20cx%3D%2219%22%20cy%3D%2216%22%20r%3D%221%22%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E");
+    cursor: move;
+    width: 20px;
+    height: 35px;
+    display: block;
+    background-color: #333;
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-20%);
+  }
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  row-gap: 20px;
+
+  .field {
+    display: flex;
+    flex-direction: column;
+    row-gap: 5px;
+    flex: 1 0 auto;
+
+    label {
+      font-weight: bold;
+      word-break: break-word;
+    }
+
+    .field-input {
+      display: flex;
+      gap: 15px;
+      flex-wrap: wrap;
+      flex: auto;
+
+      button {
+        font-size: 18px;
+      }
+    }
+  }
+}
+.form__fields-wrapper {
+  display: flex;
+  flex-direction: column;
+  row-gap: 20px;
+}
+
+.option {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+/** modal */
+
+.modal {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  display: none;
+}
+
+.modal__content {
+  background-color: var(--white);
+  padding: 20px;
+  border-radius: var(--border-radius);
+  box-shadow: var(--box-shadow);
+  width: min(800px, 80%);
+  position: relative;
+
+  h2 {
+    margin-bottom: 20px;
+  }
+}
+
+.modal__body {
+  display: flex;
+  flex-direction: column;
+  row-gap: 10px;
+}
+
+.modal__close {
+  position: absolute;
+  top: 10px;
+  right: 20px;
+  cursor: pointer;
+  font-size: 20px;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.preview-field strong {
+  word-break: break-word;
+}
+
+footer.controls {
+  display: flex;
+  gap: 10px;
+  background: #f1f1f1;
+  margin: 2em -20px -20px;
+  padding: 1.5em 2em;
+}
