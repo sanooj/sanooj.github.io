@@ -3,7 +3,48 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="styles.css" />
     <title>Google Forms Clone</title>
   </head>
-  <body></body>
+  <body>
+    <main class="form-container" role="main">
+      <section class="form" role="form">
+        <!-- Form header -->
+        <header class="form__header" role="heading">
+          <h1>Google Forms Clone</h1>
+        </header>
+
+        <!-- Form for field selection -->
+        <div class="form__field-selection" role="group">
+          <select id="fieldType">
+            <option value="">Select field type...</option>
+            <option value="text">Text Input</option>
+            <option value="checkbox">Checkbox</option>
+            <option value="radio">Radio Button</option>
+          </select>
+        </div>
+        <div id="fieldsContainer" role="group">
+          <!-- Fields will be added here -->
+        </div>
+
+        <!-- Form footer with buttons -->
+        <footer class="controls" role="group">
+          <button id="saveBtn" class="button">Save Form</button>
+          <button id="clearBtn" class="button">Clear Form</button>
+          <button id="previewBtn" class="button">Preview</button>
+        </footer>
+      </section>
+    </main>
+
+    <div id="previewModal" class="modal" role="dialog">
+      <div class="modal__content">
+        <h2>Preview</h2>
+        <div id="previewContent">
+          <!-- Preview content will be added here -->
+        </div>
+        <!-- Close button -->
+        <a id="closePreview" class="modal__close">X</a>
+      </div>
+    </div>
+  </body>
 </html>
