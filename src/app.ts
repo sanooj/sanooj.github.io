@@ -1,7 +1,7 @@
 import { FormField } from "./interfaces";
 
 // Defining the form fields array
-const formFields: FormField[] = [];
+let formFields: FormField[] = [];
 
 // Importing the required modules
 const fieldTypeSelect = document.getElementById("fieldType") as HTMLSelectElement;
@@ -10,9 +10,28 @@ const previewModal = document.getElementById("previewModal") as HTMLDivElement;
 const saveButton = document.getElementById("saveBtn") as HTMLButtonElement;
 const clearButton = document.getElementById("clearBtn") as HTMLButtonElement;
 const previewButton = document.getElementById("previewBtn") as HTMLButtonElement;
+const previewContentElement = document.getElementById("previewContent") as HTMLDivElement;
 
 // adding event listeners to the buttons for cretaing the form type
 fieldTypeSelect.addEventListener("change", handleFieldTypeChange);
+
+// Event listener for the save button
+saveButton.addEventListener("click", () => {
+  alert("Form saved successfully!");
+  saveToLocalStorage(formFields);
+});
+
+// Event listener for the clear button
+clearButton.addEventListener("click", () => {
+  formFields = [];
+  renderFields(formFields);
+  localStorage.removeItem("formFields");
+});
+
+// Event listener for the preview button
+previewButton.addEventListener("click", () => {
+  showPreview(previewContentElement);
+});
 
 /**
  * Handles the event when the field type is changed.
@@ -174,11 +193,44 @@ function addInputListeners(fieldId: string): void {
       }
 
       // Save to localStorage whenever value changes
-      saveToLocalStorage();
+      saveToLocalStorage(formFields);
     });
   });
 }
 
-function saveToLocalStorage() {
+/**
+ * Saves the current form fields to local storage.
+ *
+ * @param {FormField[]} formFields - The form fields to save.
+ * @returns {void}
+ */
+function saveToLocalStorage(formFields: FormField[]): void {
   localStorage.setItem("formFields", JSON.stringify(formFields));
+}
+
+/**
+ * Shows a preview of the form fields.
+ *
+ * @param {HTMLElement | null} previewContentElement - The element to render the preview content in.
+ * @returns {void}
+ */
+function showPreview(previewContentElement: HTMLElement | null): void {
+  if (!previewContentElement) return;
+
+  const previewContent = formFields
+    .filter((field) => !field.isDeleted)
+    .sort((a, b) => a.position - b.position)
+    .map(
+      (field) => `
+            <div class="preview-field">
+                <strong>${field.label}</strong>: 
+                <span>${Array.isArray(field.value) ? field.value.join(", ") : field.value}</span>
+            </div>
+        `,
+    )
+    .join("");
+
+  previewContentElement.innerHTML = previewContent;
+
+  previewModal.style.display = "block";
 }
