@@ -11,6 +11,7 @@ const saveButton = document.getElementById("saveBtn") as HTMLButtonElement;
 const clearButton = document.getElementById("clearBtn") as HTMLButtonElement;
 const previewButton = document.getElementById("previewBtn") as HTMLButtonElement;
 const previewContentElement = document.getElementById("previewContent") as HTMLDivElement;
+const closeButton = document.getElementById("closePreview") as HTMLButtonElement;
 
 // adding event listeners to the buttons for cretaing the form type
 fieldTypeSelect.addEventListener("change", handleFieldTypeChange);
@@ -32,6 +33,15 @@ clearButton.addEventListener("click", () => {
 previewButton.addEventListener("click", () => {
   showPreview(previewContentElement);
 });
+
+// close the preview modal when the close button is clicked
+closeButton?.addEventListener("click", () => {
+  console.log("close button clicked");
+  previewModal.style.display = "none";
+});
+
+// Function to load the form fields from local storage
+window.onload = loadFormFields;
 
 /**
  * Handles the event when the field type is changed.
@@ -233,4 +243,17 @@ function showPreview(previewContentElement: HTMLElement | null): void {
   previewContentElement.innerHTML = previewContent;
 
   previewModal.style.display = "block";
+}
+
+/**
+ * Loads the form fields from localStorage and renders them.
+ *
+ * @returns {void}
+ */
+function loadFormFields(): void {
+  const savedFields: string | null = localStorage.getItem("formFields");
+  if (savedFields) {
+    formFields = JSON.parse(savedFields) as FormField[];
+    renderFields(formFields);
+  }
 }
