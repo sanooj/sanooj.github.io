@@ -86,6 +86,9 @@ function renderFields(fields: FormField[]): void {
             `;
 
       fieldsContainer.appendChild(fieldElement);
+
+      // Add event listeners to inputs after rendering
+      addInputListeners(field.id);
     });
 }
 
@@ -140,4 +143,42 @@ function renderFieldInput(field: FormField): string {
     default:
       return "";
   }
+}
+
+/**
+ * Adds change event listeners to the inputs with the given field ID.
+ * @param {string} fieldId - The ID of the field.
+ */
+function addInputListeners(fieldId: string): void {
+  // find the field with the given field ID
+  const field = formFields.find((f) => f.id === fieldId);
+
+  // if the field is not found, return
+  if (!field) return;
+
+  // find all the input elements with the given field ID
+  const inputs = document.querySelectorAll<HTMLInputElement | HTMLSelectElement>(
+    `[data-field-id="${fieldId}"]`,
+  );
+
+  // add change event listeners to the input elements
+  inputs.forEach((input) => {
+    input.addEventListener("change", () => {
+      if (field.type === "checkbox") {
+        const checkedValues = Array.from(inputs)
+          .filter((input) => (input as HTMLInputElement).checked)
+          .map((input) => input.value);
+        field.value = checkedValues;
+      } else {
+        field.value = input.value;
+      }
+
+      // Save to localStorage whenever value changes
+      saveToLocalStorage();
+    });
+  });
+}
+
+function saveToLocalStorage() {
+  localStorage.setItem("formFields", JSON.stringify(formFields));
 }
