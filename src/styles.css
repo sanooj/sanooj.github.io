@@ -196,7 +196,6 @@ button {
 }
 
 /** content */
-
 .form-container {
   display: flex;
   flex-direction: column;
@@ -209,6 +208,32 @@ button {
   overflow: hidden;
 }
 
+.field-container {
+  position: relative;
+
+  &.dragging {
+    opacity: 0.5;
+    background: #f5f5f5;
+    padding: 20px;
+    cursor: grab;
+  }
+  &::after {
+    content: "";
+    mask-size: contain;
+    mask-position: bottom;
+    mask-image: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20class%3D%22ag-icon%22%20fill%3D%22none%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%20stroke%3D%22black%22%20stroke-width%3D%221.5%22%20viewBox%3D%220%200%2024%2024%22%3E%3Cstyle%3E*%20%7B%20vector-effect%3A%20non-scaling-stroke%3B%20%7D%3C%2Fstyle%3E%3Ccircle%20cx%3D%225%22%20cy%3D%228%22%20r%3D%220.5%22%2F%3E%3Ccircle%20cx%3D%2212%22%20cy%3D%228%22%20r%3D%220.5%22%2F%3E%3Ccircle%20cx%3D%2219%22%20cy%3D%228%22%20r%3D%220.5%22%2F%3E%3Ccircle%20cx%3D%225%22%20cy%3D%2216%22%20r%3D%220.5%22%2F%3E%3Ccircle%20cx%3D%2212%22%20cy%3D%2216%22%20r%3D%220.5%22%2F%3E%3Ccircle%20cx%3D%2219%22%20cy%3D%2216%22%20r%3D%220.5%22%2F%3E%3Cg%20stroke%3D%22none%22%20fill%3D%22currentColor%22%3E%3Ccircle%20cx%3D%225%22%20cy%3D%228%22%20r%3D%221%22%2F%3E%3Ccircle%20cx%3D%2212%22%20cy%3D%228%22%20r%3D%221%22%2F%3E%3Ccircle%20cx%3D%2219%22%20cy%3D%228%22%20r%3D%221%22%2F%3E%3Ccircle%20cx%3D%225%22%20cy%3D%2216%22%20r%3D%221%22%2F%3E%3Ccircle%20cx%3D%2212%22%20cy%3D%2216%22%20r%3D%221%22%2F%3E%3Ccircle%20cx%3D%2219%22%20cy%3D%2216%22%20r%3D%221%22%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E");
+    cursor: move;
+    width: 20px;
+    height: 35px;
+    display: block;
+    background-color: #333;
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-20%);
+  }
+}
+
 .form {
   display: flex;
   flex-direction: column;
@@ -218,14 +243,18 @@ button {
     display: flex;
     flex-direction: column;
     row-gap: 5px;
+    flex: 1 0 auto;
 
     label {
       font-weight: bold;
+      word-break: break-word;
     }
 
     .field-input {
       display: flex;
-      column-gap: 5px;
+      gap: 15px;
+      flex-wrap: wrap;
+      flex: auto;
 
       button {
         font-size: 18px;
@@ -233,7 +262,17 @@ button {
     }
   }
 }
+.form__fields-wrapper {
+  display: flex;
+  flex-direction: column;
+  row-gap: 20px;
+}
 
+.option {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
 /** modal */
 
 .modal {
@@ -254,6 +293,16 @@ button {
   box-shadow: var(--box-shadow);
   width: min(800px, 80%);
   position: relative;
+
+  h2 {
+    margin-bottom: 20px;
+  }
+}
+
+.modal__body {
+  display: flex;
+  flex-direction: column;
+  row-gap: 10px;
 }
 
 .modal__close {
@@ -265,7 +314,13 @@ button {
   font-family: Arial, Helvetica, sans-serif;
 }
 
+.preview-field strong {
+  word-break: break-word;
+}
+
 footer.controls {
+  display: flex;
+  gap: 10px;
   background: #f1f1f1;
   margin: 2em -20px -20px;
   padding: 1.5em 2em;
