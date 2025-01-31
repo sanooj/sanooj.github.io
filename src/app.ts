@@ -114,6 +114,9 @@ function renderFields(fields: FormField[]): void {
                 </div>
             `;
 
+      // Add drag listeners to the field element
+      addDragListeners(fieldElement);
+
       fieldsContainer.appendChild(fieldElement);
 
       // Add event listeners to inputs after rendering
@@ -234,7 +237,13 @@ function showPreview(previewContentElement: HTMLElement | null): void {
       (field) => `
             <div class="preview-field">
                 <strong>${field.label}</strong>: 
-                <span>${Array.isArray(field.value) ? field.value.join(", ") : field.value}</span>
+                <span>${
+                  Array.isArray(field.value)
+                    ? field.value.join(", ")
+                    : field.value
+                    ? field.value
+                    : "N/A"
+                }</span>
             </div>
         `,
     )
@@ -242,18 +251,106 @@ function showPreview(previewContentElement: HTMLElement | null): void {
 
   previewContentElement.innerHTML = previewContent;
 
-  previewModal.style.display = "block";
+  previewModal.style.display = "flex";
 }
 
 /**
- * Loads the form fields from localStorage and renders them.
+ * Loads the form fields from localStorage, parses them as FormField[], and renders them.
  *
  * @returns {void}
  */
 function loadFormFields(): void {
   const savedFields: string | null = localStorage.getItem("formFields");
-  if (savedFields) {
-    formFields = JSON.parse(savedFields) as FormField[];
-    renderFields(formFields);
+  if (savedFields !== null) {
+    const parsedFields: FormField[] = JSON.parse(savedFields) as FormField[];
+    formFields = parsedFields;
+    renderFields(parsedFields);
   }
+}
+
+/**
+ * Adds event listeners to the given field element for drag events.
+ * @param {HTMLDivElement} fieldElement - The field element to add drag listeners to.
+ */
+function addDragListeners(fieldElement: HTMLDivElement): void {
+  if (!fieldElement || !fieldsContainer) return;
+
+  fieldElement.addEventListener("dragstart", (event: DragEvent) => {
+    if (!event.dataTransfer || !fieldElement.dataset.id) return;
+
+    event.dataTransfer.setData("text/plain", fieldElement.dataset.id);
+    fieldElement.classList.add("dragging");
+  });
+
+  fieldElement.addEventListener("dragend", () => {
+    fieldElement.classList.remove("dragging");
+  });
+
+  fieldsContainer.addEventListener("dragover", (event: DragEvent) => {
+    event.preventDefault();
+    const draggingElement = document.querySelector(".dragging") as HTMLDivElement | null;
+
+    if (!draggingElement) return;
+
+    const afterElement = getDragAfterElement(fieldsContainer, event.clientY);
+    if (afterElement == null) {
+      fieldsContainer.appendChild(draggingElement);
+    } else {
+      fieldsContainer.insertBefore(draggingElement, afterElement);
+    }
+  });
+
+  fieldsContainer.addEventListener("drop", () => {
+    const draggingElement = document.querySelector(".dragging") as HTMLDivElement | null;
+    if (!draggingElement) return;
+
+    draggingElement.classList.remove("dragging");
+    updateFieldPositions(fieldsContainer);
+  });
+}
+
+/**
+ * Gets the element after the given y position in the container.
+ * @param {HTMLDivElement} container - The container element to search in.
+ * @param {number} y - The y position to search for.
+ * @returns {HTMLDivElement | null} The element after the given y position, or null if none is found.
+ */
+function getDragAfterElement(container: HTMLDivElement, y: number): HTMLDivElement | null {
+  if (!container) return null;
+
+  const draggableElements = Array.from(
+    container.querySelectorAll<HTMLDivElement>(".field-container:not(.dragging)"),
+  );
+
+  return draggableElements.reduce<{ offset: number; element: HTMLDivElement | null }>(
+    (closest, child) => {
+      const box = child.getBoundingClientRect();
+      const offset = y - box.top - box.height / 2;
+      if (offset < 0 && offset > closest.offset) {
+        return { offset, element: child };
+      } else {
+        return closest;
+      }
+    },
+    { offset: Number.NEGATIVE_INFINITY, element: null },
+  ).element;
+}
+
+/**
+ * Updates the positions of the fields based on the DOM order.
+ * @param {HTMLDivElement | null} fieldsContainer - The container element of the fields.
+ * @returns {void}
+ */
+function updateFieldPositions(fieldsContainer: HTMLDivElement | null): void {
+  if (!fieldsContainer) return;
+
+  const fieldContainers = fieldsContainer.querySelectorAll<HTMLDivElement>(".field-container");
+  fieldContainers.forEach((container, index) => {
+    const fieldId = container.dataset.id;
+    const field = formFields.find((f) => f.id === fieldId);
+    if (field) {
+      field.position = index;
+    }
+  });
+  saveToLocalStorage(formFields);
 }
