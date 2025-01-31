@@ -209,8 +209,7 @@ button {
 }
 
 .field-container {
-  display: flex;
-  align-items: flex-end;
+  position: relative;
 
   &.dragging {
     opacity: 0.5;
@@ -226,7 +225,12 @@ button {
     cursor: move;
     width: 20px;
     height: 35px;
+    display: block;
     background-color: #333;
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-20%);
   }
 }
 
@@ -243,11 +247,14 @@ button {
 
     label {
       font-weight: bold;
+      word-break: break-word;
     }
 
     .field-input {
       display: flex;
-      column-gap: 5px;
+      gap: 15px;
+      flex-wrap: wrap;
+      flex: auto;
 
       button {
         font-size: 18px;
@@ -259,6 +266,12 @@ button {
   display: flex;
   flex-direction: column;
   row-gap: 20px;
+}
+
+.option {
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 /** modal */
 
@@ -301,7 +314,13 @@ button {
   font-family: Arial, Helvetica, sans-serif;
 }
 
+.preview-field strong {
+  word-break: break-word;
+}
+
 footer.controls {
+  display: flex;
+  gap: 10px;
   background: #f1f1f1;
   margin: 2em -20px -20px;
   padding: 1.5em 2em;

@@ -1,17 +1,17 @@
+import {
+  clearButton,
+  closeButton,
+  fieldsContainer,
+  fieldTypeSelect,
+  previewButton,
+  previewContentElement,
+  previewModal,
+  saveButton,
+} from "./eventHandlers";
 import { FormField } from "./interfaces";
 
 // Defining the form fields array
 let formFields: FormField[] = [];
-
-// Importing the required modules
-const fieldTypeSelect = document.getElementById("fieldType") as HTMLSelectElement;
-const fieldsContainer = document.getElementById("fieldsContainer") as HTMLDivElement;
-const previewModal = document.getElementById("previewModal") as HTMLDivElement;
-const saveButton = document.getElementById("saveBtn") as HTMLButtonElement;
-const clearButton = document.getElementById("clearBtn") as HTMLButtonElement;
-const previewButton = document.getElementById("previewBtn") as HTMLButtonElement;
-const previewContentElement = document.getElementById("previewContent") as HTMLDivElement;
-const closeButton = document.getElementById("closePreview") as HTMLButtonElement;
 
 // adding event listeners to the buttons for cretaing the form type
 fieldTypeSelect.addEventListener("change", handleFieldTypeChange);
@@ -36,7 +36,6 @@ previewButton.addEventListener("click", () => {
 
 // close the preview modal when the close button is clicked
 closeButton?.addEventListener("click", () => {
-  console.log("close button clicked");
   previewModal.style.display = "none";
 });
 
@@ -106,11 +105,13 @@ function renderFields(fields: FormField[]): void {
                     <label for="field-${field.id}">${field.label}</label>
                     <div id="field-${field.id}-input" class="field-input">
                     ${renderFieldInput(field)} 
+                    <div class="field-actions">
+                    <button class='edit' onclick='editField("${field.id}")'>Edit</button>
                     <button onclick="deleteField('${field.id}')" class="button" ${
         field.isDeleted ? "disabled" : ""
       }>x</button>
                     </div>
-                     
+                    </div>
                 </div>
             `;
 
@@ -143,7 +144,7 @@ function renderFieldInput(field: FormField): string {
           ?.map((opt) => {
             const isChecked = Array.isArray(field.value) && field.value.includes(opt);
             return `
-                    <div>
+                    <div class="option">
                         <input type="checkbox" 
                                class="field-input" 
                                data-field-id="${field.id}" 
@@ -160,7 +161,7 @@ function renderFieldInput(field: FormField): string {
           ?.map((opt) => {
             const isChecked = field.value === opt;
             return `
-                    <div>
+                    <div class="option">
                         <input type="radio" 
                                class="field-input" 
                                name="radio_${field.id}" 
@@ -353,4 +354,26 @@ function updateFieldPositions(fieldsContainer: HTMLDivElement | null): void {
     }
   });
   saveToLocalStorage(formFields);
+}
+
+(window as any).deleteField = deleteField;
+function deleteField(fieldId: string) {
+  const field = formFields.find((f) => f.id === fieldId);
+  if (!field) return;
+
+  field.isDeleted = true;
+  renderFields(formFields);
+}
+
+(window as any).editField = editField;
+function editField(fieldId: string) {
+  const field = formFields.find((f) => f.id === fieldId);
+  if (field) {
+    const newLabel = prompt("Enter new label for the field:", field.label);
+    if (newLabel) {
+      field.label = newLabel;
+      saveToLocalStorage(formFields);
+      renderFields(formFields); // Re-render fields to reflect changes
+    }
+  }
 }
