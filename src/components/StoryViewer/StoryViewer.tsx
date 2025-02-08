@@ -52,8 +52,7 @@ const StoryViewer = () => {
                   src={imageUrl}
                   alt={storyId}
                   key={storyId}
-                  data-cy='story'
-                  data-index={index}
+                  {...(currentIndex === index ? { "data-cy": "story", "data-index": index } : {})}
                   loading='lazy'
                   className={currentIndex - 1 === index ? styles.previous : styles.current}
                 />
