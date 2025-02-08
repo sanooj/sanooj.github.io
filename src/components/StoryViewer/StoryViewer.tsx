@@ -1,4 +1,4 @@
-import { lazy } from "react";
+import { lazy, useRef } from "react";
 
 const StoryViewerLoader = lazy(() => import("./StoryViewerLoader/StoryViewerLoader"));
 const StoryViewerProfile = lazy(() => import("./StoryViewerProfile/StoryViewerProfile"));
@@ -13,10 +13,16 @@ import useStoryViewer from "./useStoryViewer";
  */
 const StoryViewer = () => {
   /**
+   * A reference to the story content div element.
+   * It's used to scroll the story content to the top when the story changes.
+   */
+  const storyContentRef = useRef<HTMLDivElement | null>(null);
+
+  /**
    * The story object that contains the story data.
    * The story data is fetched when the component mounts.
    */
-  const { story, switchStory, currentIndex } = useStoryViewer();
+  const { story, switchStory, currentIndex } = useStoryViewer(storyContentRef);
 
   return (
     <div className={styles.storyViewer}>
@@ -30,7 +36,7 @@ const StoryViewer = () => {
         <StoryViewerProfile story={story} />
       </header>
 
-      <div className={styles.storyContent}>
+      <div className={styles.storyContent} ref={storyContentRef}>
         {/* The prev button that navigates to the previous story. * The button is hidden visually
         and is only accessible via accessibility tools.  */}
         <a onClick={() => switchStory("PREV")} data-cy='prev-button'>
@@ -40,9 +46,19 @@ const StoryViewer = () => {
         if the current story is visible.  */}
         {story?.stories?.map(({ storyId, imageUrl, duration }, index) => {
           return (
-            currentIndex === index && (
-              <img src={imageUrl} alt={storyId} key={storyId} data-cy='story' data-index={index} />
-            )
+            <>
+              {(currentIndex - 1 == index || currentIndex === index) && (
+                <img
+                  src={imageUrl}
+                  alt={storyId}
+                  key={storyId}
+                  data-cy='story'
+                  data-index={index}
+                  loading='lazy'
+                  className={currentIndex - 1 === index ? styles.previous : styles.current}
+                />
+              )}
+            </>
           );
         })}
         {/* The next button that navigates to the next story. * The button is hidden visually and

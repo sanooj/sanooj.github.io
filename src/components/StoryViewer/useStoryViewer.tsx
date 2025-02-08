@@ -11,7 +11,7 @@ import { useNavigate, useParams } from "react-router-dom";
  *
  * @returns An object containing the story state, a function to switch to the next story and the current index of the story.
  */
-const useStoryViewer = () => {
+const useStoryViewer = (storyContentRef: React.RefObject<HTMLDivElement | null>) => {
   const { id } = useParams();
   const [story, setStory] = useState<IApi>();
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -24,6 +24,7 @@ const useStoryViewer = () => {
    * If the user is at the first story, does nothing.
    */
   const switchStory = (type: Action) => {
+    storyContentRef?.current?.classList.remove("animation-in");
     switch (type) {
       case "NEXT":
         if (story?.stories && story?.stories?.length - 1 === currentIndex) {
@@ -69,6 +70,7 @@ const useStoryViewer = () => {
     const newStory = await getStories(story?.nextUserId);
     if (!newStory) return;
     navigate(`/stories/${newStory?.username}/${newStory?.userId}`);
+    storyContentRef?.current?.classList.add("animation-in");
     setCurrentIndex(0);
   };
 

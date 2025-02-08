@@ -1,3 +1,7 @@
+.storyViewer {
+  perspective: 1000px;
+}
+
 .header {
   padding: 8px 8px 0;
   display: flex;
@@ -17,11 +21,59 @@
   overflow: hidden;
   position: relative;
   z-index: 1;
+  transition: transform 0.5s;
+  transform-style: preserve-3d;
+  transition: transform 1s ease;
+
+  &:global(.animation-in) {
+    animation: animation-in 0.5s ease forwards;
+    transform-origin: 100% 50%;
+  }
 
   img {
     width: 100vw;
     height: 100vh;
     object-fit: cover;
+    transition: all 0.5s ease;
+    position: absolute;
+    top: 0;
+    left: 0;
+    transform: translateX(100%);
+
+    &.previous {
+      animation: slide-left 0.5s ease forwards;
+    }
+
+    &.current {
+      animation: slide 0.5s ease forwards;
+    }
+  }
+
+  @keyframes slide {
+    0% {
+      transform: translateX(100%);
+    }
+    100% {
+      transform: translateX(0);
+    }
+  }
+
+  @keyframes slide-left {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(-100%);
+    }
+  }
+
+  @keyframes animation-in {
+    0% {
+      transform: perspective(1500px) rotateY(90deg);
+    }
+    100% {
+      transform: perspective(1500px) rotateY(0deg);
+    }
   }
 
   a {
