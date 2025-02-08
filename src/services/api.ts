@@ -1,4 +1,4 @@
-import { IApi, IStory } from "@/types/types";
+import { IApi } from "@/types/types";
 
 // API call methods
 const fetchUsersStories = async () => {

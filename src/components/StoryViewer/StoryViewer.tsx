@@ -38,7 +38,7 @@ const StoryViewer = () => {
         </a>
         {/* The story content that displays the current story image. * The image is rendered only
         if the current story is visible.  */}
-        {story?.stories?.map(({ storyId, imageUrl, duration }, index) => {
+        {story?.stories?.map(({ storyId, imageUrl }, index) => {
           return (
             currentIndex === index && (
               <img src={imageUrl} alt={storyId} key={storyId} data-cy='story' data-index={index} />
