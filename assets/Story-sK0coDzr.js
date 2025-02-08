@@ -1,2 +1,0 @@
-const __vite__mapDeps=(i,m=__vite__mapDeps,d=(m.f||(m.f=["assets/StoryViewer-DxYWO56T.js","assets/index-De5f6n9C.js","assets/index-11BEJxOj.css","assets/api-AjEM0RAc.js","assets/StoryViewer-a5LDpw88.css"])))=>i.map(i=>d[i]);
-import{j as s,r as t,_ as r}from"./index-De5f6n9C.js";const e={},o=t.lazy(()=>r(()=>import("./StoryViewer-DxYWO56T.js"),__vite__mapDeps([0,1,2,3,4]))),i=()=>s.jsx("div",{className:e.story,children:s.jsx(o,{})});export{i as default};
