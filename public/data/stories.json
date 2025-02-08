@@ -1,0 +1,80 @@
+[
+  {
+    "userId": "user1",
+    "username": "JohnDoe",
+    "profileImage": "https://example.com/profile/john_doe.jpg",
+    "stories": [
+      {
+        "storyId": "story1-1",
+        "imageUrl": "https://example.com/stories/john_doe/story1.jpg",
+        "duration": 5
+      },
+      {
+        "storyId": "story1-2",
+        "imageUrl": "https://example.com/stories/john_doe/story2.jpg",
+        "duration": 5
+      }
+    ]
+  },
+  {
+    "userId": "user2",
+    "username": "JaneSmith",
+    "profileImage": "https://example.com/profile/jane_smith.jpg",
+    "stories": [
+      {
+        "storyId": "story2-1",
+        "imageUrl": "https://example.com/stories/jane_smith/story1.jpg",
+        "duration": 5
+      },
+      {
+        "storyId": "story2-2",
+        "imageUrl": "https://example.com/stories/jane_smith/story2.jpg",
+        "duration": 5
+      },
+      {
+        "storyId": "story2-3",
+        "imageUrl": "https://example.com/stories/jane_smith/story3.jpg",
+        "duration": 5
+      }
+    ]
+  },
+  {
+    "userId": "user3",
+    "username": "DavidLee",
+    "profileImage": "https://example.com/profile/david_lee.jpg",
+    "stories": [
+      {
+        "storyId": "story3-1",
+        "imageUrl": "https://example.com/stories/david_lee/story1.jpg",
+        "duration": 5
+      }
+    ]
+  },
+  {
+    "userId": "user4",
+    "username": "EmilyChen",
+    "profileImage": "https://example.com/profile/emily_chen.jpg",
+    "stories": [
+      {
+        "storyId": "story4-1",
+        "imageUrl": "https://example.com/stories/emily_chen/story1.jpg",
+        "duration": 5
+      },
+      {
+        "storyId": "story4-2",
+        "imageUrl": "https://example.com/stories/emily_chen/story2.jpg",
+        "duration": 5
+      },
+      {
+        "storyId": "story4-3",
+        "imageUrl": "https://example.com/stories/emily_chen/story3.jpg",
+        "duration": 5
+      },
+      {
+        "storyId": "story4-4",
+        "imageUrl": "https://example.com/stories/emily_chen/story4.jpg",
+        "duration": 5
+      }
+    ]
+  }
+]
