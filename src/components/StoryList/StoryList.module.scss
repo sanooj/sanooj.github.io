@@ -1,0 +1,54 @@
+.storyList {
+  height: 100px;
+  padding: 16px 0;
+}
+
+ul.storyListItems {
+  list-style: none;
+  display: flex;
+  gap: 10px;
+  overflow-x: auto;
+
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
+  li {
+    font-size: var(--secondary-font-size);
+    text-align: center;
+    scroll-snap-align: start;
+    flex: 0 0 auto;
+  }
+}
+
+.profilePic {
+  width: 66px;
+  height: 66px;
+  border-radius: 50%;
+  display: flex;
+  place-items: center;
+  background: linear-gradient(
+    45deg,
+    #f09433 0%,
+    #e6683c 25%,
+    #dc2743 50%,
+    #cc2366 75%,
+    #bc1888 100%
+  );
+  padding: 2px;
+
+  img {
+    position: relative;
+    border-radius: 50%;
+    z-index: 1;
+    object-fit: cover;
+    object-position: center;
+    flex: 1;
+    border: 1px solid #000;
+  }
+}
