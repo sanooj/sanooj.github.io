@@ -1,0 +1,24 @@
+.home {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100vw;
+}
+
+.header {
+  padding: 0 16px;
+}
+
+.logo {
+  width: 150px;
+  padding-block-start: 16px;
+  position: sticky;
+
+  img {
+    display: block;
+  }
+}
+
+.content {
+  padding: 0 16px;
+}

@@ -1,50 +1,59 @@
-# React + TypeScript + Vite
+# Project Title
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Description
+Briefly describe what the project is about, its purpose, and its main features.
 
-Currently, two official plugins are available:
+## Setup Instructions
+1. **Clone the Repository**
+   ```bash
+   git clone <repository-url>
+   cd <repository-directory>
+   ```
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+2. **Install Dependencies**
+   ```bash
+   npm install
+   ```
 
-## Expanding the ESLint configuration
+3. **Run the Development Server**
+   ```bash
+   npm start
+   ```
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+## Running End-to-End Tests
+To run the e2e tests using Cypress, follow these steps:
 
-- Configure the top-level `parserOptions` property like this:
+1. **Open Cypress Test Runner**
+   ```bash
+   npx cypress open
+   ```
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+2. **Run Tests**
+   - Select the test file you want to run from the Cypress Test Runner interface.
+   - The tests will execute in a browser, and you can observe the results in real-time.
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+3. **Headless Mode (Optional)**
+   To run tests in headless mode (without opening the browser), use:
+   ```bash
+   npx cypress run
+   ```
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
+## Events
+### Cypress Tests
+- **Visit Homepage**: The homepage is tested by visiting the URL `http://localhost:5173/`.
+- **Verify URL**: After certain actions, the URL is verified to ensure it does not match the `/stories/...` pattern.
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
+### Story Viewer Component
+- **Navigation**: The component allows users to navigate through stories using "prev" and "next" buttons.
+- **Visibility**: The buttons are visually hidden but accessible for screen readers.
+- **Auto-Switch Stories**: The component automatically switches to the next story after a specified duration.
+- **Last Story Handling**: When the last story is reached, it switches to the next story or loops back to the first story.
+
+## Styling
+- **SCSS Files**: The project uses SCSS for styling. Key styles include:
+  - `.hidden`: Used to hide elements visually.
+  - `.content`: Adds padding to the main content area.
+
+## Additional Information
+- **Technologies Used**: List any frameworks, libraries, or tools used in the project (e.g., React, Cypress).
+- **Contributing**: Provide guidelines for contributing to the project.

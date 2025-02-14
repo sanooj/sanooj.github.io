@@ -1,0 +1,35 @@
+.profile {
+  display: grid;
+  grid-template-columns: 32px auto 24px;
+  grid-template-rows: 16px 16px;
+  grid-template-areas:
+    "profileImage username closeButton"
+    "profileImage desc closeButton";
+  padding: 8px;
+  column-gap: 8px;
+  font-size: var(--primary-font-size);
+  color: #fff;
+  align-items: center;
+}
+
+.profileImage {
+  grid-area: profileImage;
+  border-radius: 50%;
+}
+
+.username {
+  grid-area: username;
+  font-weight: bold;
+}
+
+.desc {
+  grid-area: desc;
+}
+
+.closeButton {
+  grid-area: closeButton;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  scale: 1.2;
+}
